@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var Commands = require('../dist/commands').Commands;
+var commands = new Commands(process.argv);
+commands.execute(process.argv);
