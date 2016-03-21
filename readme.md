@@ -14,7 +14,7 @@ Docker
 
 The actual worker class for interfacing with Docker.
 
-```
+```js
 class Docker{
     constructor(options)
     containerId
@@ -28,6 +28,8 @@ class Docker{
     run(command, <...args>, <callback>)
     spawn(command, args, callback)
     throwIfEnabled(error)
+    static ps(args)
+    static containers()
 }
 ```
 
@@ -97,12 +99,27 @@ throwIfEnabled(error)
 
 Used to throw errors if throwEnabled is not false **For internal use only!**
 
+### static ps(<options>, args, callback)
+
+Static method on Docker class to return the running list of docker processes.
+You can pass in an optional options argument with the dockerCommand if you are
+not using the standard 'docker' command.
+
+* options
+  * dockerCommand - defaults to 'docker'
+* args - Any arguments you want to call options.dockerCommand ps with
+* callback(err, response) - Callback with either error or output
+
+### static containers()
+
+Returns a list of running containers
+
 Commands
 ---
 
 Simple wrapper for executing multiple commands on a docker container and then performing a clean shutdown.
 
-```
+```js
 class Commands{
     constructor(options)
     containerId
@@ -149,7 +166,7 @@ here are some examples of how to use it.
 
 Using Alpine Linux with Node 4 execute projects tests
 
-```
+```sh
 rouster -v ./:/app/test -w /app/src \
   -e "cp -R /app/test/. /app/src" \
   -e "rm -rf node_modules/" \
@@ -160,7 +177,7 @@ rouster -v ./:/app/test -w /app/src \
 
 Using the official Node.js Docker Image execute project tests
 
-```
+```sh
 rouster -v ./:/app/test -w /app/src \
   -e "cp -R /app/test/. /app/src" \
   -e "rm -rf node_modules/" \
