@@ -189,16 +189,18 @@ describe('Docker', ()=>{
     });
   });
 
-  it('Should be able to pull and test something that isn\'t node.js', (done)=>{
+  it('Should be able to pull and test something that isn\'t node.js', {timeout: 300000}, (done)=>{
     const docker = new Docker({image: 'tlovett1/php-5.2-phpunit-3.5'});
-    docker.pull((err)=>{
-      docker.run('/bin/bash', (err)=>{
-        expect(err).to.be.null();
-        docker.kill((err)=>{
+    docker.exec('rmi', 'tlovett1/php-5.2-phpunit-3.5', ()=>{
+      docker.pull((err)=>{
+        docker.run('/bin/bash', (err)=>{
           expect(err).to.be.null();
-          docker.rm((err)=>{
+          docker.kill((err)=>{
             expect(err).to.be.null();
-            done();
+            docker.rm((err)=>{
+              expect(err).to.be.null();
+              done();
+            });
           });
         });
       });
