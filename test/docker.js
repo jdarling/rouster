@@ -59,8 +59,10 @@ describe('Docker', ()=>{
       expect(output).to.be.an.object();
       expect(docker.containerId).to.be.a.string().and.to.match(/^[a-z0-9]+$/i);
       docker.kill(()=>{
-        expect(docker.containerId).to.be.a.string().and.to.equal('');
-        done();
+        docker.rm(()=>{
+          expect(docker.containerId).to.be.a.string().and.to.equal('');
+          done();
+        });
       });
     });
   });
@@ -79,8 +81,10 @@ describe('Docker', ()=>{
           expect(err).to.be.null();
           expect(output.stdout).to.be.an.array().and.to.have.a.length(lsOutput.stdout.length).and.to.only.contain(lsOutput.stdout);
           docker.kill(()=>{
-            expect(docker.containerId).to.be.a.string().and.to.equal('');
-            done();
+            docker.rm(()=>{
+              expect(docker.containerId).to.be.a.string().and.to.equal('');
+              done();
+            });
           });
         });
       });
@@ -98,8 +102,10 @@ describe('Docker', ()=>{
         expect(err.stderr).to.be.an.array();
         expect(err.stderr[0]).to.be.a.string();
         docker.kill(()=>{
-          expect(docker.containerId).to.be.a.string().and.to.equal('');
-          done();
+          docker.rm(()=>{
+            expect(docker.containerId).to.be.a.string().and.to.equal('');
+            done();
+          });
         });
       });
     });
@@ -112,9 +118,73 @@ describe('Docker', ()=>{
         expect(err).to.be.null();
         expect(containers).to.be.an.array().and.to.contain(docker.containerId.substr(0, containers[0].length));
         docker.kill(()=>{
-          expect(docker.containerId).to.be.a.string().and.to.equal('');
-          done();
+          docker.rm(()=>{
+            expect(docker.containerId).to.be.a.string().and.to.equal('');
+            done();
+          });
         });
+      });
+    });
+  });
+
+  it('Should be able to kill and remove running containers', (done)=>{
+    const docker = new Docker();
+    docker.run('/bin/bash', '-v', __dirname+':/app/test', '-w', '/app', (err, output)=>{
+      const containerId = docker.containerId;
+      Docker.containers((err, containers)=>{
+        expect(err).to.be.null();
+        const containerIdLength = containers[0].length;
+        expect(containers).to.be.an.array().and.to.contain(containerId.substr(0, containerIdLength));
+        docker.kill((err)=>{
+          expect(err).to.be.null();
+          expect(docker.containerId).to.be.a.string().and.to.equal('');
+          docker.rm((err)=>{
+            expect(err).to.be.null();
+            Docker.containers('-a', (err, containers)=>{
+              expect(err).to.be.null();
+              expect(containers).to.be.an.array().and.to.not.contain(containerId.substr(0, containerIdLength));
+              done();
+            });
+          });
+        });
+      });
+    });
+  });
+
+  it('Should be able to stop and remove running containers', (done)=>{
+    const docker = new Docker();
+    docker.run('/bin/bash', '-v', __dirname+':/app/test', '-w', '/app', (err, output)=>{
+      const containerId = docker.containerId;
+      Docker.containers((err, containers)=>{
+        expect(err).to.be.null();
+        const containerIdLength = containers[0].length;
+        expect(containers).to.be.an.array().and.to.contain(containerId.substr(0, containerIdLength));
+        docker.stop(()=>{
+          expect(err).to.be.null();
+          expect(docker.containerId).to.be.a.string().and.to.equal('');
+          docker.rm((err)=>{
+            expect(err).to.be.null();
+            Docker.containers('-a', (err, containers)=>{
+              expect(err).to.be.null();
+              expect(containers).to.be.an.array().and.to.not.contain(containerId.substr(0, containerIdLength));
+              done();
+            });
+          });
+        });
+      });
+    });
+  });
+
+  it('Should be able to pull a docker image', (done)=>{
+    const docker = new Docker();
+    docker.execDockerCommand('rmi', 'node:latest', (err, output)=>{
+      expect(err).to.be.null();
+      docker.pull((err, output)=>{
+        expect(err).to.be.null();
+        expect(output.stdout).to.be.an.array();
+        expect(output.stdout[output.stdout.length-1]).to.be.a.string().and.to.contain('Downloaded newer image for node:latest');
+        expect();
+        done();
       });
     });
   });

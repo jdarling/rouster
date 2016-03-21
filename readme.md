@@ -22,11 +22,15 @@ class Docker{
     dockerVersion
     emit(eventName, ...args)
     exec(command, <...args>, <callback>)
+    execDockerCommand(command, <...args>, <callback>)
     getDockerInfo(<callback>)
     kill(<callback>)
     on(eventName, callback)
+    ps(<...args>, <callback>)
+    rm(<...args>, <callback>)
     run(command, <...args>, <callback>)
     spawn(command, args, callback)
+    stop(<...args>, callback)
     throwIfEnabled(error)
     static ps(args)
     static containers()
@@ -39,10 +43,13 @@ class Docker{
 * error - Emitted when an error occurs
 * exec_done - Emitted any time an exec command completes
 * killed - Emitted when a container is killed
+* pulled - Emitted when a Docker image is pulled
+* removed - Emitted when a container image is removed
 * running - Emitted when a container is running
 * spawn - Emitted when a child process is spawned
 * stderr - Emitted any time spawn gets a stderr message
 * stdout - Emitted any time spawn gets a stdout message
+* stopped - Emitted when a running container is stopped
 
 ### constructor(options)
 
@@ -87,6 +94,14 @@ Kills the running container.
 
 Used to setup an event handler.
 
+### ps(<...args>, <callback>)
+
+Used to get a process list from docker.
+
+### rm(<...args>, <callback>)
+
+Used to remove the (stopped/killed) container.
+
 ### run(command, <...args>, <callback>)
 
 Used to start a new container, if the container is already running just exits.
@@ -95,7 +110,11 @@ Used to start a new container, if the container is already running just exits.
 
 Used to wrap calls to docker **For internal use only!**
 
-throwIfEnabled(error)
+### stop(<...args>, callback)
+
+Used to stop the running container.
+
+### throwIfEnabled(error)
 
 Used to throw errors if throwEnabled is not false **For internal use only!**
 
