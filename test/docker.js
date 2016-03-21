@@ -104,4 +104,18 @@ describe('Docker', ()=>{
       });
     });
   });
+
+  it('Should be able to list running containers', (done)=>{
+    const docker = new Docker();
+    docker.run('/bin/bash', '-v', __dirname+':/app/test', '-w', '/app', (err, output)=>{
+      Docker.containers((err, containers)=>{
+        expect(err).to.be.null();
+        expect(containers).to.be.an.array().and.to.contain(docker.containerId.substr(0, containers[0].length));
+        docker.kill(()=>{
+          expect(docker.containerId).to.be.a.string().and.to.equal('');
+          done();
+        });
+      });
+    });
+  });
 });
