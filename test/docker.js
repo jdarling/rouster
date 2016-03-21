@@ -188,4 +188,54 @@ describe('Docker', ()=>{
       });
     });
   });
+
+  it('Should be able to pull and test something that isn\'t node.js', (done)=>{
+    const docker = new Docker({image: 'tlovett1/php-5.2-phpunit-3.5'});
+    docker.pull((err)=>{
+      docker.run('/bin/bash', (err)=>{
+        expect(err).to.be.null();
+        docker.kill((err)=>{
+          expect(err).to.be.null();
+          docker.rm((err)=>{
+            expect(err).to.be.null();
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  it('Should not fail when stop is called multiple times', (done)=>{
+    const docker = new Docker();
+    docker.run('/bin/bash', (err)=>{
+      expect(err).to.be.null();
+      docker.stop((err)=>{
+        expect(err).to.be.null();
+        docker.rm((err)=>{
+          expect(err).to.be.null();
+          docker.stop((err)=>{
+            expect(err).to.be.null();
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  it('Should not fail when kill is called multiple times', (done)=>{
+    const docker = new Docker();
+    docker.run('/bin/bash', (err)=>{
+      expect(err).to.be.null();
+      docker.kill((err)=>{
+        expect(err).to.be.null();
+        docker.rm((err)=>{
+          expect(err).to.be.null();
+          docker.kill((err)=>{
+            expect(err).to.be.null();
+            done();
+          });
+        });
+      });
+    });
+  });
 });

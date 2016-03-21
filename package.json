@@ -10,6 +10,7 @@
     "test": "./node_modules/.bin/lab --transform ./test/setup.js --ignore 'Reflect,core,_babelPolyfill,regeneratorRuntime,__core-js_shared__'",
     "compile": "rm -rf dist/; ./node_modules/.bin/babel -d dist/ lib/",
     "kill": "docker kill $(docker ps -q)",
+    "rm": "docker rm -v $(docker ps -qa)",
     "preuninstall": "rm -rf dist/",
     "install": "npm run compile"
   },
