@@ -246,6 +246,7 @@ options
   -r, --no-kill - Don't kill or remove container image when complete, by default rouster kills and removes the container when complete
   -c, --container-id - Wrap currently running container
   -u, --output-status - After everything is complete output the container id and status
+  -p, --publish [hostPort:containerPort] - Publish the private containerPort to the host system through hostPort
   -?, -h, --help - Shows this screen
   --version - Output the current version
 ```
