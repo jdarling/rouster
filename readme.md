@@ -192,10 +192,24 @@ here are some examples of how to use it.
 
 **NOTE:** For this to work you had to have installed rouster gobally with npm install -g rouster
 
+Both of these examples:
+
+* mount the current working directory to /app/src
+* set the container working directory to /app/test
+* copy the contents of /app/src to /app/test
+* remove any existing node_modules/ folder
+* perform a npm install
+* perform a npm test
+* shut down the container
+* remove the container
+
+The only real difference is the image they use (Alpine or Node.js official) and
+the shell command used to access the running image (/bin/ash vs /bin/bash).
+
 Using Alpine Linux with Node 4 execute projects tests
 
 ```sh
-rouster -v ./:/app/test -w /app/src \
+rouster -v ./:/app/src -w /app/test \
   -e "cp -R /app/src/. /app/test" \
   -e "rm -rf node_modules/" \
   -e "npm install" \
@@ -206,7 +220,7 @@ rouster -v ./:/app/test -w /app/src \
 Using the official Node.js (latest) Docker Image execute project tests
 
 ```sh
-rouster -v ./:/app/test -w /app/src \
+rouster -v ./:/app/src -w /app/test \
   -e "cp -R /app/src/. /app/test" \
   -e "rm -rf node_modules/" \
   -e "npm install" \
