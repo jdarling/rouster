@@ -206,7 +206,7 @@ Both of these examples:
 The only real difference is the image they use (Alpine or Node.js official) and
 the shell command used to access the running image (/bin/ash vs /bin/bash).
 
-Using Alpine Linux with Node 4 execute projects tests
+#### Using Alpine Linux with Node 4 execute projects tests
 
 ```sh
 rouster -v ./:/app/src -w /app/test \
@@ -217,7 +217,7 @@ rouster -v ./:/app/src -w /app/test \
   -i mhart/alpine-node:4 -s /bin/ash
 ```
 
-Using the official Node.js (latest) Docker Image execute project tests
+#### Using the official Node.js (latest) Docker Image execute project tests
 
 ```sh
 rouster -v ./:/app/src -w /app/test \
