@@ -30,6 +30,7 @@ class Docker{
     rm(<...args>, <callback>)
     run(command, <...args>, <callback>)
     spawn(command, args, callback)
+    status(callback)
     stop(<...args>, callback)
     throwIfEnabled(error)
     static ps(args)
@@ -110,6 +111,19 @@ Used to start a new container, if the container is already running just exits.
 
 Used to wrap calls to docker **For internal use only!**
 
+### status(callback)
+
+Get the current status of the wrapped container.
+
+```js
+docker.status((err, status)=>{
+  if(err){
+    return console.error(err.stderr.join(''));
+  }
+  console.log(`${docker.lastContainerId} - ${status}`)
+});
+```
+
 ### stop(<...args>, callback)
 
 Used to stop the running container.
@@ -187,7 +201,7 @@ Using Alpine Linux with Node 4 execute projects tests
 
 ```sh
 rouster -v ./:/app/test -w /app/src \
-  -e "cp -R /app/test/. /app/src" \
+  -e "cp -R /app/src/. /app/test" \
   -e "rm -rf node_modules/" \
   -e "npm install" \
   -e "npm test" \
@@ -198,8 +212,28 @@ Using the official Node.js Docker Image execute project tests
 
 ```sh
 rouster -v ./:/app/test -w /app/src \
-  -e "cp -R /app/test/. /app/src" \
+  -e "cp -R /app/src/. /app/test" \
   -e "rm -rf node_modules/" \
   -e "npm install" \
   -e "npm test" \
+```
+
+#### Options
+
+```sh
+rouster <options>
+options
+  -i <imageName>, --image <imageName> - Docker image to run, defaults to "node:latest"
+  -d <dockerExecutable>, --docker <dockerExecutable> - Docker executable to use, defaults to "docker"
+  -s, --shell - Shell command to use, defaults to "/bin/bash"
+  -e <command>, --execute <command> - Adds a command to be executed on the container once its running
+  -l, --loud, --verbose - Output everything
+  -w, --working directory - Sets the working directory
+  -v, --volume - Mount a volume to the container
+  -r, --no-rm - Don't remove container image when complete, by default rouster removes the container when complete
+  -r, --no-kill - Don't kill or remove container image when complete, by default rouster kills and removes the container when complete
+  -c, --container-id - Wrap currently running container
+  -u, --output-status - After everything is complete output the container id and status
+  -?, -h, --help - Shows this screen
+  --version - Output the current version
 ```
