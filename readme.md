@@ -194,8 +194,9 @@ here are some examples of how to use it.
 
 Both of these examples:
 
+* start a docker container with the specified image
 * mount the current working directory to /app/src
-* set the container working directory to /app/test
+* set the container working directory to (a non-existent) /app/test
 * copy the contents of /app/src to /app/test
 * remove any existing node_modules/ folder
 * perform a npm install
