@@ -227,7 +227,7 @@ rouster -v ./:/app/src -w /app/test \
   -e "npm test" \
 ```
 
-#### Options
+#### CLI Options
 
 ```sh
 rouster [options]
