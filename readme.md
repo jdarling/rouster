@@ -26,7 +26,6 @@ class Docker{
     getDockerInfo(<callback>)
     kill(<callback>)
     on(eventName, callback)
-    ps(<...args>, <callback>)
     rm(<...args>, <callback>)
     run(command, <...args>, <callback>)
     spawn(command, args, callback)
@@ -95,10 +94,6 @@ Kills the running container.
 
 Used to setup an event handler.
 
-### ps(<...args>, <callback>)
-
-Used to get a process list from docker.
-
 ### rm(<...args>, <callback>)
 
 Used to remove the (stopped/killed) container.
@@ -132,13 +127,13 @@ Used to stop the running container.
 
 Used to throw errors if throwEnabled is not false **For internal use only!**
 
-### static ps(<options>, args, callback)
+### static ps(<dockerOptions>, args, callback)
 
 Static method on Docker class to return the running list of docker processes.
 You can pass in an optional options argument with the dockerCommand if you are
 not using the standard 'docker' command.
 
-* options
+* dockerOptions
   * dockerCommand - defaults to 'docker'
 * args - Any arguments you want to call options.dockerCommand ps with
 * callback(err, response) - Callback with either error or output
@@ -208,7 +203,7 @@ rouster -v ./:/app/test -w /app/src \
   -i mhart/alpine-node:4 -s /bin/ash
 ```
 
-Using the official Node.js Docker Image execute project tests
+Using the official Node.js (latest) Docker Image execute project tests
 
 ```sh
 rouster -v ./:/app/test -w /app/src \
