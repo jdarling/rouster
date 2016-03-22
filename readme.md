@@ -211,6 +211,8 @@ the shell command used to access the running image (/bin/ash vs /bin/bash).
 
 ```sh
 rouster -v ./:/app/src -w /app/test \
+  -e "apk update" \
+  -e "apk add alpine-sdk python" \
   -e "cp -R /app/src/. /app/test" \
   -e "rm -rf node_modules/" \
   -e "npm install" \
