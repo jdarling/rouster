@@ -21,16 +21,16 @@ class Docker{
     dockerBuild
     dockerVersion
     emit(eventName, ...args)
-    exec(command, <...args>, <callback>)
-    execDockerCommand(command, <...args>, <callback>)
-    getDockerInfo(<callback>)
-    kill(<callback>)
+    exec(command, [...args], [callback])
+    execDockerCommand(command, [...args], [callback])
+    getDockerInfo([callback])
+    kill([callback])
     on(eventName, callback)
-    rm(<...args>, <callback>)
-    run(command, <...args>, <callback>)
+    rm([...args], [callback])
+    run(command, [...args], [callback])
     spawn(command, args, callback)
     status(callback)
-    stop(<...args>, callback)
+    stop([...args], callback)
     throwIfEnabled(error)
     static ps(args)
     static containers()
@@ -78,15 +78,15 @@ Once docker has been found, contains the build number of the currently installed
 
 Used to emit event's **For internal use only!**
 
-### exec(command, <...args>, <callback>)
+### exec(command, [...args], [callback])
 
 Execute command on the running container.  If run hasn't been called will throw or return an erorr.
 
-### getDockerInfo(<callback>)
+### getDockerInfo([callback])
 
 Used to get the current docker executable information **For internal use only!**
 
-### kill(<callback>)
+### kill([callback])
 
 Kills the running container.
 
@@ -94,11 +94,11 @@ Kills the running container.
 
 Used to setup an event handler.
 
-### rm(<...args>, <callback>)
+### rm([...args], [callback])
 
 Used to remove the (stopped/killed) container.
 
-### run(command, <...args>, <callback>)
+### run(command, [...args], [callback])
 
 Used to start a new container, if the container is already running just exits.
 
@@ -111,7 +111,7 @@ Used to wrap calls to docker **For internal use only!**
 Get the current status of the wrapped container.
 
 ```js
-docker.status((err, status)=>{
+docker.status((err, status)=]{
   if(err){
     return console.error(err.stderr.join(''));
   }
@@ -119,7 +119,7 @@ docker.status((err, status)=>{
 });
 ```
 
-### stop(<...args>, callback)
+### stop([...args], callback)
 
 Used to stop the running container.
 
@@ -127,13 +127,13 @@ Used to stop the running container.
 
 Used to throw errors if throwEnabled is not false **For internal use only!**
 
-### static ps(<dockerOptions>, args, callback)
+### static ps([options], args, callback)
 
 Static method on Docker class to return the running list of docker processes.
 You can pass in an optional options argument with the dockerCommand if you are
 not using the standard 'docker' command.
 
-* dockerOptions
+* options
   * dockerCommand - defaults to 'docker'
 * args - Any arguments you want to call options.dockerCommand ps with
 * callback(err, response) - Callback with either error or output
@@ -216,12 +216,12 @@ rouster -v ./:/app/test -w /app/src \
 #### Options
 
 ```sh
-rouster <options>
+rouster [options]
 options
-  -i <imageName>, --image <imageName> - Docker image to run, defaults to "node:latest"
-  -d <dockerExecutable>, --docker <dockerExecutable> - Docker executable to use, defaults to "docker"
+  -i [imageName], --image [imageName] - Docker image to run, defaults to "node:latest"
+  -d [dockerExecutable], --docker [dockerExecutable] - Docker executable to use, defaults to "docker"
   -s, --shell - Shell command to use, defaults to "/bin/bash"
-  -e <command>, --execute <command> - Adds a command to be executed on the container once its running
+  -e [command], --execute [command] - Adds a command to be executed on the container once its running
   -l, --loud, --verbose - Output everything
   -w, --working directory - Sets the working directory
   -v, --volume - Mount a volume to the container
