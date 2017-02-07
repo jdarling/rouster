@@ -1,7 +1,7 @@
 'use strict';
 
-import Code from 'code';
-const expect = Code.expect;
+const Code = require('code');
+const {expect} = Code;
 
 const Lab = require('lab');
 const lab = exports.lab = Lab.script();

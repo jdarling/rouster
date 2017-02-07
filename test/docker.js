@@ -1,7 +1,7 @@
 'use strict';
 
-import Code from 'code';
-const expect = Code.expect;
+const Code = require('code');
+const {expect} = Code;
 
 const Lab = require('lab');
 const lab = exports.lab = Lab.script();
@@ -59,7 +59,7 @@ describe('Docker', ()=>{
       expect(output).to.be.an.object();
       expect(docker.containerId).to.be.a.string().and.to.match(/^[a-z0-9]+$/i);
       docker.kill(()=>{
-        docker.rm(()=>{
+        docker.rm('-f', ()=>{
           expect(docker.containerId).to.be.a.string().and.to.equal('');
           done();
         });

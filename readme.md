@@ -1,6 +1,8 @@
 Rouster
 ===
 
+**NOTE:** Version 1.0.0 and up require Node 6+, if you need support for less than Node 6, install version 0.0.x
+
 **noun**
   * (Australian & US) an unskilled labourer on an oil rig
   * A name for a Dock Worker, also known as a Docker
