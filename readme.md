@@ -6,6 +6,25 @@ Rouster
   * A name for a Dock Worker, also known as a Docker
   * A basic wrapper around Docker for Node.js
 
+Troubleshooting
+---
+
+If you get back a response about "Got permission denied while trying to connect to the Docker daemon" you need to be able to run docker as non-root, or to run node/npm as root.  To setup docker as non-root see: http://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo
+
+In short:
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo service docker restart
+```
+
+Log out and back in, or run:
+
+```
+sg docker -c "bash"
+```
+
 Classes
 ===
 
@@ -249,4 +268,31 @@ options
   -p, --publish [hostPort:containerPort] - Publish the private containerPort to the host system through hostPort
   -?, -h, --help - Shows this screen
   --version - Output the current version
+```
+
+Useful Docker Stuff
+---
+
+stop all containers:
+
+```
+docker kill $(docker ps -q)
+```
+
+remove all containers
+
+```
+docker rm $(docker ps -a -q)
+```
+
+remove all docker images
+
+```
+docker rmi $(docker images -q)
+```
+
+remove all docker volumes
+
+```
+docker volume ls -qf dangling=true | xargs -r docker volume rm
 ```
