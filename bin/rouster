@@ -2,6 +2,6 @@
 
 'use strict';
 
-var Commands = require('../dist/commands').Commands;
+var Commands = require('../lib/commands').Commands;
 var commands = new Commands(process.argv);
 commands.execute(process.argv);

@@ -2,7 +2,6 @@
 
 'use strict';
 
-require('babel-register');
 var Commands = require('../lib/commands').Commands;
 var commands = new Commands(process.argv);
 commands.execute(process.argv);
