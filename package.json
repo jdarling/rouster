@@ -1,6 +1,6 @@
 {
   "name": "rouster",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A basic wrapper around docker for node",
   "main": "index.js",
   "bin": {
