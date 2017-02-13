@@ -9,7 +9,8 @@
   "scripts": {
     "test": "lab --timeout 0",
     "kill": "docker kill $(docker ps -q)",
-    "rm": "docker rm -v $(docker ps -qa)"
+    "rm": "docker rm -v $(docker ps -qa)",
+    "sg": "sg docker -c \"bash\""
   },
   "keywords": [
     "Docker"
