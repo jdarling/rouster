@@ -42,11 +42,14 @@ const Docker = require('../lib/docker').Docker;
 describe('Docker', ()=>{
   it('Should be able to detect docker version and build', (done)=>{
     const docker = new Docker();
+    const reDockerVersion = /\bv?(?:0|[0-9]\d*)\.(?:0|[0-9]\d*)\.(?:0|[0-9]\d*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?\b/i;
+    //const reDockerVersion = /^\d+\.\d+\.\d+$/;
+    const reDockerBuild = /^[a-z0-9]+$/i;
     docker.getDockerInfo((err, output)=>{
       expect(err).to.be.null();
       expect(output).to.be.an.object();
-      expect(docker.dockerVersion).to.be.a.string().and.to.match(/^\d+\.\d+\.\d+$/);
-      expect(docker.dockerBuild).to.be.a.string().and.to.match(/^[a-z0-9]+$/i);
+      expect(docker.dockerVersion).to.be.a.string().and.to.match(reDockerVersion);
+      expect(docker.dockerBuild).to.be.a.string().and.to.match(reDockerBuild);
       done();
     });
   });
