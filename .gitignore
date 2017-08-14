@@ -3,3 +3,4 @@ dist/
 coverage/
 test.sh
 npm-debug.log
+yarn-error.log
