@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-  Commands: require('./dist/commands').Commands,
-  Docker: require('./dist/docker').Docker,
+  Commands: require('./lib/commands').Commands,
+  Docker: require('./lib/docker').Docker,
 };
